@@ -1,4 +1,23 @@
-# Code description and Relevant information
+# Junior Python Developer
+
+## Goal
+
+Your task is to **plan and implement a test structure** to ensure that `WhatsappBot` behaves correctly when handling
+a few default conversations, as well as achieving a high degree of code coverage. To do that, you will need to
+
+1. **Create a private fork of the repo**
+    - Grant access to javi@bookline.io and joan@bookline.io so that they can review the progress.
+    - Note that making multiple commits instead of a single one with everything is preferred.
+2. **Plan the tests**
+    - By looking at the code, write down sample conversations that you consider should be implemented as tests in order to achieve a high degree of coverage of `WhatsappBot`.
+    - `main.py` has five examples of how a conversation might start, as well as an example of a full conversation (only the user input)
+    - Adding additional conversations to increase code coverage is preferred. Don't just stick with the provided conversations.
+3. **Implement the tests**
+    - Using pytest or unittest, implement one or more of your full-conversation tests
+    - You will need to mock calls to `Classifier` and `BooklineAPI` methods - methods for these classes are not implemented,
+    so we need to mock them in order to perform the tests. You can read more about this here: https://docs.python.org/3/library/unittest.mock.html
+4. **(Optional) Suggest improvements to the code of `WhatsappBot`**
+    - In case you see something that you consider could/should be improved, feel free to point it out!
 
 ## Repository Structure
 
@@ -61,18 +80,3 @@ This output will be then handled by another service.
 
 The bot continues to process interactions until it decides to send out a **hangup** response.  
 At that time the `WhatsappBot` is destroyed and the conversation ends.
-
-# Task
-
-Your task is to plan and implement a test structure to ensure that `WhatsappBot` behaves correctly when handling
-a few default conversations, as well as achieving a high degree of code coverage. To do that, you will need to
-
-1. **Plan the tests**
-    - By looking at the code, write down sample conversations that you consider should be implemented as tests in order to achieve a high degree of coverage of `WhatsappBot`
-    - `main.py` has five examples of how a conversation might start, as well as an example of a full conversation (only the user input)
-2. **Implement the tests**
-    - Using unittest, implement one or more of your full-conversation tests
-    - You will need to mock calls to `Classifier` and `BooklineAPI` methods - methods for these classes are not implemented,
-    so we need to mock them in order to perform the tests.
-3. **(Optional) Suggest improvements to the code of `WhatsappBot`**
-    - In case you see something that you consider could/should be improved, feel free to point it out!
