@@ -20,6 +20,77 @@ class TestBot_2(unittest.TestCase):
             self.assertEqual(expected_resp, resp, "Unexpected response")
 
 
+class TestBot_3(unittest.TestCase):
+    def test_confirm(self):
+        with patch.object(WhatsappBot, '_get_intent', return_value='confirm') as mock_method:
+            my_bot_3 = WhatsappBot(language="en")
+            my_bot_3._get_intent("confirm")
+            my_bot_3.conversation_status = "start"
+
+            expected_resp = {
+                        "answer": {
+                            "id": 0,
+                            "message": "Great! Please, let me know your e-mail",
+                        },
+                        "action": "continue"
+                    }
+            resp = my_bot_3.message("Yes, I'd love to!", "newsletter")
+            self.assertEqual(expected_resp, resp, "Unexpected response")
+
+
+    #@patch('bot.WhatsappBot._get_intent')
+    def test_enter_email_1st(self):
+        with patch.object(WhatsappBot, '_get_intent', return_value='undefined') as mock_method:
+            my_bot_3 = WhatsappBot(language="en")
+            my_bot_3._get_intent("undefined")
+            my_bot_3.conversation_status = "expectingEmail"
+    
+            expected_resp = {
+                        "answer": {
+                            "id": 0,
+                            "message": "It seems that this e-mail is not valid. Please make sure it's correct",
+                        },
+                        "action": "continue"
+                    }
+            resp = my_bot_3.message("I prefer to get by notifications by post", "newsletter")
+            self.assertEqual(expected_resp, resp, "Unexpected response")
+
+
+    def test_enter_email_2nd(self):
+        with patch.object(WhatsappBot, '_get_intent', return_value='undefined') as mock_method:
+            my_bot_3 = WhatsappBot(language="en")
+            my_bot_3._get_intent("undefined")
+            my_bot_3.conversation_status = "expectingEmail"
+    
+            expected_resp = {
+                        "answer": {
+                            "id": 0,
+                            "message": "It seems that this e-mail is not valid. Please make sure it's correct",
+                        },
+                        "action": "continue"
+                    }
+            resp = my_bot_3.message("My address is 742 Evergreen Terrace", "newsletter")
+            self.assertEqual(expected_resp, resp, "Unexpected response")
+
+    @patch('api.BooklineAPI.insert_customer_email')
+    def test_reject_emails(self, email):
+        with patch.object(WhatsappBot, '_get_intent', return_value='reject') as mock_method:
+            my_bot_3 = WhatsappBot(language="en")
+            my_bot_3._get_intent("reject")
+            my_bot_3.conversation_status = "expectingEmail"
+            
+
+            expected_resp = {
+                        "answer": {
+                            "id": 0,
+                            "message": "Okay, I hope you enjoy the experience at the restaurant",
+                        },
+                        "action": "continue"
+                    }
+            resp = my_bot_3.message("I don't want emails", "newsletter")
+            self.assertEqual(expected_resp, resp, "Unexpected response")
+    
+
 
 if __name__ == "__main__":
 
