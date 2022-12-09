@@ -69,9 +69,11 @@ class TestConv_1(unittest.TestCase):
 
 
 class TestConv_2(unittest.TestCase):
-    def test_my_bot_2(self):
-        with patch.object(WhatsappBot, '_get_intent') as mock_method:
+    @patch('api.BooklineAPI.insert_customer_email')
+    def test_my_bot_2(self, email):
+        with patch.object(WhatsappBot, '_get_intent', return_value='undefined') as mock_method:
             my_bot_2 = WhatsappBot(language="es")
+            my_bot_2._get_intent("undefined")
             
             expected_resp = {
                         "answer": {
@@ -80,6 +82,8 @@ class TestConv_2(unittest.TestCase):
                         },
                         "action": "continue"
                     }
+            
+            
             resp = my_bot_2.message("No quiero recibir nada", "ask_for_email")
             actual_message = resp['answer']['message']
             print("Input: No quiero recibir nada")
@@ -147,7 +151,7 @@ class TestConv_3(unittest.TestCase):
                     }
             resp = my_bot_3.message("My address is 742 Evergreen Terrace", "newsletter")
             actual_message = resp['answer']['message']
-            print("Input: I don't want emails")
+            print("Input: My address is 742 Evergreen Terrace")
             print(f"Output: {actual_message}")
 
             self.assertEqual(expected_resp, resp, "Unexpected response")
