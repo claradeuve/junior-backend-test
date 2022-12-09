@@ -112,6 +112,7 @@ class WhatsappBot:
                     "en": "Perfect, we've stored your e-mail! Enjoy the experience at the restaurant",
                 }
             else:
+                # Parece que si el usuario decide no facilitar su email se queda 'atascado' en esta situación
                 answer = {
                     "es": "Este e-mail no parece válido. Por favor, revisalo de nuevo",
                     "en": "It seems that this e-mail is not valid. Please make sure it's correct",
