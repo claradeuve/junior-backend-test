@@ -4,9 +4,8 @@ from unittest.mock import patch
 
 class TestBot_2(unittest.TestCase):
     def test_my_bot_2(self):
-        with patch.object(WhatsappBot, '_get_intent', return_value='confirm') as mock_method:
+        with patch.object(WhatsappBot, '_get_intent') as mock_method:
             my_bot_2 = WhatsappBot(language="es")
-            my_bot_2._get_intent("")
             
             expected_resp = {
                         "answer": {
