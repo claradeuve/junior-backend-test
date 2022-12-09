@@ -1,20 +1,24 @@
-from unittest.mock import patch
 from bot import WhatsappBot
 import unittest
+from unittest.mock import patch
 
-class TestConsumer(unittest.TestCase):
-    @patch('bot.WhatsappBot._get_intent')
-    def test_my_bot_2(self, intent):
-        my_bot_2 = WhatsappBot(language="es")
-        expected_resp = {
-                    "answer": {
-                        "id": 0,
-                        "message": "Perfecto, hemos guardado tu e-mail! Disfruta de la experiencia en el restaurante.",
-                    },
-                    "action": "hangup"
-                }
-        resp = my_bot_2.message("no quiero recibir nada", "ask_for_email")
-        self.assertEquals(expected_resp, resp, f"Unexpected response")
+class TestBot_2(unittest.TestCase):
+    def test_my_bot_2(self):
+        with patch.object(WhatsappBot, '_get_intent', return_value='confirm') as mock_method:
+            my_bot_2 = WhatsappBot(language="es")
+            my_bot_2._get_intent("")
+            
+            expected_resp = {
+                        "answer": {
+                            "id": 0,
+                            "message": "Este e-mail no parece válido. Por favor, revisalo de nuevo",
+                        },
+                        "action": "continue"
+                    }
+            resp = my_bot_2.message("No quiero recibir nada", "ask_for_email")
+            actual_message = resp['answer']['message']
+            print(f"Result: {actual_message}")
+            self.assertEqual(expected_resp, resp, "Unexpected response")
 
 
 
