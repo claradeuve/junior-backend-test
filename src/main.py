@@ -1,8 +1,11 @@
 from bot import WhatsappBot
 
+
 if __name__ == "__main__":
 
     my_bot = WhatsappBot(language="en")  # Bot should re instantiated for each conversation
+    my_bot_2 = WhatsappBot(language="es")
+    my_bot_3 = WhatsappBot(language="en")
 
     # Some examples of how a conversation might start
     # Conv 1
@@ -25,3 +28,10 @@ if __name__ == "__main__":
     my_bot.message("Yes, I would like to receive notifications", "newsletter")  # bot status changes to expectingEmail
     my_bot.message("abc email", "newsletter")  # invalid email, bot status is still expecting email
     my_bot.message("abc@email.com", "newsletter")  # valid email, bot inserts email and sends hangup
+
+    # Conv 2
+    my_bot_2.message("No quiero recibir nada", "ask_for_email")
+
+    # Conv 3
+    my_bot_3.message("Yes, I'd love to!", "newsletter")
+    my_bot_3.message("I prefer not to share my email", "newsletter")
