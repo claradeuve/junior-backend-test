@@ -2,7 +2,7 @@ from bot import WhatsappBot
 import unittest
 from unittest.mock import patch
 
-class TestBot_2(unittest.TestCase):
+class TestConv_2(unittest.TestCase):
     def test_my_bot_2(self):
         with patch.object(WhatsappBot, '_get_intent') as mock_method:
             my_bot_2 = WhatsappBot(language="es")
@@ -16,11 +16,13 @@ class TestBot_2(unittest.TestCase):
                     }
             resp = my_bot_2.message("No quiero recibir nada", "ask_for_email")
             actual_message = resp['answer']['message']
-            print(f"Result: {actual_message}")
+            print("Input: No quiero recibir nada")
+            print(f"Output: {actual_message}")
+
             self.assertEqual(expected_resp, resp, "Unexpected response")
 
 
-class TestBot_3(unittest.TestCase):
+class TestConv_3(unittest.TestCase):
     def test_confirm(self):
         with patch.object(WhatsappBot, '_get_intent', return_value='confirm') as mock_method:
             my_bot_3 = WhatsappBot(language="en")
@@ -35,10 +37,13 @@ class TestBot_3(unittest.TestCase):
                         "action": "continue"
                     }
             resp = my_bot_3.message("Yes, I'd love to!", "newsletter")
+            actual_message = resp['answer']['message']
+            print("Input: Yes, I'd love to!")
+            print(f"Output: {actual_message}")
+
             self.assertEqual(expected_resp, resp, "Unexpected response")
 
 
-    #@patch('bot.WhatsappBot._get_intent')
     def test_enter_email_1st(self):
         with patch.object(WhatsappBot, '_get_intent', return_value='undefined') as mock_method:
             my_bot_3 = WhatsappBot(language="en")
@@ -52,7 +57,11 @@ class TestBot_3(unittest.TestCase):
                         },
                         "action": "continue"
                     }
-            resp = my_bot_3.message("I prefer to get by notifications by post", "newsletter")
+            resp = my_bot_3.message("I prefer to get my notifications by post", "newsletter")
+            actual_message = resp['answer']['message']
+            print("Input: I prefer to get my notifications by post")
+            print(f"Output: {actual_message}")
+
             self.assertEqual(expected_resp, resp, "Unexpected response")
 
 
@@ -70,6 +79,10 @@ class TestBot_3(unittest.TestCase):
                         "action": "continue"
                     }
             resp = my_bot_3.message("My address is 742 Evergreen Terrace", "newsletter")
+            actual_message = resp['answer']['message']
+            print("Input: I don't want emails")
+            print(f"Output: {actual_message}")
+
             self.assertEqual(expected_resp, resp, "Unexpected response")
 
     @patch('api.BooklineAPI.insert_customer_email')
@@ -88,6 +101,10 @@ class TestBot_3(unittest.TestCase):
                         "action": "continue"
                     }
             resp = my_bot_3.message("I don't want emails", "newsletter")
+            actual_message = resp['answer']['message']
+            print("Input: I don't want emails")
+            print(f"Output: {actual_message}")
+
             self.assertEqual(expected_resp, resp, "Unexpected response")
     
 
@@ -95,6 +112,7 @@ class TestBot_3(unittest.TestCase):
 if __name__ == "__main__":
 
     unittest.main()
+
     my_bot = WhatsappBot(language="en")  # Bot should re instantiated for each conversation
     my_bot_2 = WhatsappBot(language="es")
     my_bot_3 = WhatsappBot(language="en")
@@ -126,6 +144,6 @@ if __name__ == "__main__":
 
     # Conv 3
     my_bot_3.message("Yes, I'd love to!", "newsletter")
-    my_bot_3.message("I prefer to get by notifications by post")
+    my_bot_3.message("I prefer to get my notifications by post")
     my_bot_3.message("My address is 742 Evergreen Terrace")
     my_bot_3.message("I don't want emails")
