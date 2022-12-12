@@ -19,7 +19,7 @@ class TestNewsletter(unittest.TestCase):
 
             self.assertEqual(expected_resp, actual_resp, "Unexpected response")
 
-
+    
     def test_conv3(self):
         with patch.object(WhatsappBot, '_get_intent', return_value='confirm') as mock_method:
             my_bot_3 = WhatsappBot(language="en")
@@ -35,6 +35,24 @@ class TestNewsletter(unittest.TestCase):
             actual_resp = resp['answer']['message']
 
             self.assertEqual(expected_resp, actual_resp, "Unexpected response")
+
+
+    @patch('api.BooklineAPI.insert_customer_email')
+    def test_conv4(self, email):
+        with patch.object(WhatsappBot, '_get_intent', return_value='undefined') as mock_method:
+            my_bot4 = WhatsappBot(language="en")
+            my_bot4.message("Which kind of notifications would I get?", "newsletter")
+        with patch.object(WhatsappBot, '_get_intent', return_value='confirm') as mock_method:
+            my_bot4.message("Alright, I would like to receive notifications", "newsletter")
+        with patch.object(WhatsappBot, '_get_intent', return_value='undefined') as mock_method:
+            resp = my_bot4.message("My email is my_name@yahoo.es", "newsletter")
+            
+            actual_resp = resp['answer']['message']
+            expected_resp = "Perfect, we've stored your e-mail! Enjoy the experience at the restaurant"
+
+            self.assertEqual(expected_resp, actual_resp, "Unexpected response")
+   
+
 
 
 class TestAskForEmail(unittest.TestCase):
