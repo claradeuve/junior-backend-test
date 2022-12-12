@@ -37,6 +37,18 @@ class TestNewsletter(unittest.TestCase):
             self.assertEqual(expected_resp, actual_resp, "Unexpected response")
 
 
+class TestAskForEmail(unittest.TestCase):
+    @patch('api.BooklineAPI.insert_customer_email')
+    def test_conv2(self, email):
+        with patch.object(WhatsappBot, '_get_intent', return_value='undefined') as mock_method:
+            my_bot_2 = WhatsappBot(language="es")
+            resp = my_bot_2.message("No quiero recibir nada", "ask_for_email")
+            
+            expected_resp = "Este e-mail no parece válido. Por favor, revisalo de nuevo"
+            actual_resp = resp['answer']['message']
+
+            self.assertEqual(expected_resp, actual_resp, "Unexpected response")
+
 
 if __name__ == "__main__":
     unittest.main()
