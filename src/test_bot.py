@@ -14,10 +14,14 @@ class TestNewsletter(unittest.TestCase):
         with patch.object(WhatsappBot, '_get_intent', return_value='undefined') as mock_method:
             resp = my_bot.message("abc@email.com", "newsletter")
             
-            actual_resp = resp['answer']['message']
-            expected_resp = "Perfect, we've stored your e-mail! Enjoy the experience at the restaurant"
+            expected_message = "Perfect, we've stored your e-mail! Enjoy the experience at the restaurant"
+            actual_message = resp['answer']['message']
 
-            self.assertEqual(expected_resp, actual_resp, "Unexpected response")
+            expected_action = "continue"
+            actual_action = resp['action']
+
+            self.assertEqual(expected_message, actual_message, "Unexpected message")
+            self.assertEqual(expected_action, actual_action, "Unexpected action")
 
     
     def test_conv3(self):
@@ -31,10 +35,15 @@ class TestNewsletter(unittest.TestCase):
         with patch.object(WhatsappBot, '_get_intent', return_value='reject') as mock_method:
             resp = my_bot_3.message("I don't want emails", "newsletter")
 
-            expected_resp = "Okay, I hope you enjoy the experience at the restaurant"
-            actual_resp = resp['answer']['message']
+            expected_message = "Okay, I hope you enjoy the experience at the restaurant"
+            actual_message = resp['answer']['message']
 
-            self.assertEqual(expected_resp, actual_resp, "Unexpected response")
+            expected_action = "continue"
+            actual_action = resp['action']
+
+            self.assertEqual(expected_message, actual_message, "Unexpected message")
+            self.assertEqual(expected_action, actual_action, "Unexpected action")
+
 
 
     @patch('api.BooklineAPI.insert_customer_email')
@@ -47,10 +56,14 @@ class TestNewsletter(unittest.TestCase):
         with patch.object(WhatsappBot, '_get_intent', return_value='undefined') as mock_method:
             resp = my_bot4.message("My email is my_name@yahoo.es", "newsletter")
             
-            actual_resp = resp['answer']['message']
-            expected_resp = "Perfect, we've stored your e-mail! Enjoy the experience at the restaurant"
+            expected_message = "Perfect, we've stored your e-mail! Enjoy the experience at the restaurant"
+            actual_message = resp['answer']['message']
 
-            self.assertEqual(expected_resp, actual_resp, "Unexpected response")
+            expected_action = "continue"
+            actual_action = resp['action']
+
+            self.assertEqual(expected_message, actual_message, "Unexpected message")
+            self.assertEqual(expected_action, actual_action, "Unexpected action")
    
 
 
@@ -62,10 +75,14 @@ class TestAskForEmail(unittest.TestCase):
             my_bot_2 = WhatsappBot(language="es")
             resp = my_bot_2.message("No quiero recibir nada", "ask_for_email")
             
-            expected_resp = "Este e-mail no parece válido. Por favor, revisalo de nuevo"
-            actual_resp = resp['answer']['message']
+            expected_message = "Este e-mail no parece válido. Por favor, revisalo de nuevo"
+            actual_message = resp['answer']['message']
 
-            self.assertEqual(expected_resp, actual_resp, "Unexpected response")
+            expected_action = "continue"
+            actual_action = resp['action']
+
+            self.assertEqual(expected_message, actual_message, "Unexpected message")
+            self.assertEqual(expected_action, actual_action, "Unexpected action")
 
 
 if __name__ == "__main__":
