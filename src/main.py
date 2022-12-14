@@ -49,3 +49,6 @@ if __name__ == "__main__":
     my_bot_4.message("Alright, I would like to receive notifications", "newsletter")
     my_bot_4.message("My email is my_name@yahoo.es", "newsletter")
 
+    # Conv 5
+    my_bot.message("No, I would hate to receive notifications", "newsletter")
+
